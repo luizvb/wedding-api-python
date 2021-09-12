@@ -1,0 +1,17 @@
+FROM python:3.8-slim-buster
+
+ARG AWS_SECRET_KEY
+ARG AWS_ACCESS_KEY
+ARG AWS_BUCKET_NAME
+
+ENV AWS_SECRET_KEY=12345
+ENV AWS_ACCESS_KEY=12345
+ENV AWS_BUCKET_NAME=12345
+
+WORKDIR /app
+
+RUN pip install
+
+COPY . .
+
+CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]
