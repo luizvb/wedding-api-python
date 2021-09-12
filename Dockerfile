@@ -1,17 +1,33 @@
-FROM python:3.8-slim-buster
+FROM python as base
 
-ARG AWS_SECRET_KEY
-ARG AWS_ACCESS_KEY
-ARG AWS_BUCKET_NAME
+# Setup env
+ENV LANG C.UTF-8
+ENV LC_ALL C.UTF-8
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONFAULTHANDLER 1
 
-ENV AWS_SECRET_KEY=12345
-ENV AWS_ACCESS_KEY=12345
-ENV AWS_BUCKET_NAME=12345
 
-WORKDIR /app
+FROM base AS python-deps
 
-RUN pip install
+# Install pipenv and compilation dependencies
+RUN pip install pipenv
+RUN apt-get update && apt-get install -y --no-install-recommends gcc
 
-COPY . .
+# Install python dependencies in /.venv
+COPY Pipfile .
+COPY Pipfile.lock .
+RUN PIPENV_VENV_IN_PROJECT=1 pipenv install --deploy
 
-CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]
+
+FROM base AS runtime
+
+# Copy virtual env from python-deps stage
+COPY --from=python-deps /.venv /.venv
+ENV PATH="/.venv/bin:$PATH"
+
+ADD ./src /src
+WORKDIR /src
+
+# Run the application
+# ENTRYPOINT ["python", "-m", "main.py"]
+CMD ["python", "-m", "main"]

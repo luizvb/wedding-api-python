@@ -10,6 +10,7 @@ pymongo = "*"
 isodate = "*"
 rdflib = "*"
 flask-cors = "*"
+dnspython = "*"
 
 [dev-packages]
 
