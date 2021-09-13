@@ -8,24 +8,18 @@ class ServiceGallery:
         self.uri = ''
 
     def get_images(self, param):
-        if param == 'true':
-            images = list(mongo.apptenis.gallery.find({"status": "not_approved"}))
-        else:
-            images = list(mongo.apptenis.gallery.find({"status": "approved"}))
-        return Storage.InfraestructureStorage().get_image(images)
+        images = list(mongo.apptenis.gallery.find({"status": "not_approved"})) if param =='true' else list(mongo.apptenis.gallery.find({"status": "approved"}))
+        return Storage.InfraestructureStorage().get_obj(images)
 
     def upload_image(self, image):
-        try:
-            Storage.InfraestructureStorage().upload_image(image)
-            data = {
-                "filename": image.filename,
-                "date": datetime.now(),
-                "status": 'not_approved'
-            }
-            mongo.apptenis.gallery.insert_one(data)
-            return data
-        except Exception as err:
-            print(err)
+        Storage.InfraestructureStorage().upload_obj(image)
+        data = {
+            "filename": image.filename,
+            "date": datetime.now(),
+            "status": 'not_approved'
+        }
+        mongo.apptenis.gallery.insert_one(data)
+        return data
 
     def approve_image(self, id):
         query_filter = {"_id": ObjectId(id)}
