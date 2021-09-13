@@ -1,9 +1,10 @@
 import boto3
+import os
 
 class InfraestructureStorage:
     def __init__(self) -> None:
-        self.access_key = 'AKIA2U3H5ZR6USQP6CUW'
-        self.secret_key = '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'
+        self.access_key = os.environ['AWS_ACCESS_KEY']
+        self.secret_key = os.environ['AWS_SECRET_KEY']
         self.s3 = boto3.client('s3',aws_access_key_id=self.access_key,aws_secret_access_key=self.secret_key)
         self.bucket = 'galleryimages'
 
