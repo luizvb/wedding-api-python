@@ -6,8 +6,6 @@ services:
           - type: bind
             source: ./src
             target: /src
-        ports: 
-            - 8080:8080
         environment: 
             FLASK_DEBUG: 1
             MONGO_URI: mongodb+srv://luiz:PmaYWAikRQUGs93T@apptenis.fgica.mongodb.net/Gallery
