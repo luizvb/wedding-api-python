@@ -30,4 +30,4 @@ ADD ./src /src
 WORKDIR /src
 
 # Run the application
-CMD ["python", "-m", "main"]
+CMD ["gunicorn", "main:app"]

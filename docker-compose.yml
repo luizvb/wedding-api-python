@@ -7,9 +7,8 @@ services:
             source: ./src
             target: /src
         ports: 
-            - 3001:3001
+            - 8080:8080
         environment: 
-            PORT: 5000
             FLASK_DEBUG: 1
             MONGO_URI: mongodb+srv://luiz:PmaYWAikRQUGs93T@apptenis.fgica.mongodb.net/Gallery
             AWS_ACCESS_KEY: AKIA2U3H5ZR6USQP6CUW
