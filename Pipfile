@@ -11,6 +11,7 @@ isodate = "*"
 rdflib = "*"
 flask-cors = "*"
 dnspython = "*"
+gunicorn = "*"
 
 [dev-packages]
 
