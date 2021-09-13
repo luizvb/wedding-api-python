@@ -10,7 +10,7 @@ app.json_encoder = MongoJSONEncoder
 app.url_map.converters['objectid'] = ObjectIdConverter
 
 @app.route("/", methods=['GET'])
-def images():
+def aloha():
       return 'ok'
 
 @app.route("/api/v1/images", methods=['GET', 'POST', 'OPTIONS'])
