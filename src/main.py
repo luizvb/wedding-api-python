@@ -9,9 +9,13 @@ CORS(app)
 app.json_encoder = MongoJSONEncoder
 app.url_map.converters['objectid'] = ObjectIdConverter
 
-@app.route("/api/v1/images", methods=['GET', 'POST', 'OPTIONS'])
-def images():
-      return jsonify(Gallery.ControllerGallery().images(request))
+@app.route("/api/v1/images", methods=['POST'])
+def upload_images():
+      return jsonify(Gallery.ControllerGallery().upload_image(request))
+
+@app.route("/api/v1/images", methods=['GET'])
+def get_images():
+      return jsonify(Gallery.ControllerGallery().get_images(request))
 
 @app.route("/api/v1/images/<id>", methods=['PUT'])
 def approve_image(id):

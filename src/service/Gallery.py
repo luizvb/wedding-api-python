@@ -12,12 +12,8 @@ class ServiceGallery:
         return Storage.InfraestructureStorage().get_obj(images)
 
     def upload_image(self, image):
+        data = { "filename": image.filename, "date": datetime.now(), "status": 'not_approved'}
         Storage.InfraestructureStorage().upload_obj(image)
-        data = {
-            "filename": image.filename,
-            "date": datetime.now(),
-            "status": 'not_approved'
-        }
         mongo.apptenis.gallery.insert_one(data)
         return data
 

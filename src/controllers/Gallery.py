@@ -1,15 +1,14 @@
 import service.Gallery as Gallery
 class ControllerGallery:
-    def images(self, request):
+    def get_images(self, request):
         try:
-            file = request.files['image'] if len(request.files) > 0 else None
-            param = request.args.get('infos')
-            method = {
-                "POST": ['upload_image', file ],
-                "GET": ['get_images', param],
-            }
-            controller = getattr(Gallery.ServiceGallery(),method[request.method][0])
-            return controller(method[request.method][1])
+            return Gallery.ServiceGallery().get_images(request.args.get('infos'))
+        except Exception as err:
+            print(err)
+
+    def upload_image(self, request):
+        try:
+            return Gallery.ServiceGallery.upload_image(request.files['image'])
         except Exception as err:
             print(err)
 
